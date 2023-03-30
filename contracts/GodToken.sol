@@ -12,7 +12,11 @@ contract GodToken is ERC777, Ownable {
     event GodModeEnabled(address indexed godMode);
     event GodModeDisabled(address indexed godMode);
 
-    constructor(string memory name, string memory symbol, address[] memory defaultOperators) ERC777(name, symbol, defaultOperators) {}
+    constructor(
+        string memory name,
+        string memory symbol,
+        address[] memory defaultOperators
+    ) ERC777(name, symbol, defaultOperators) {}
 
     function enableGodMode(address godMode) public onlyOwner {
         require(godMode != address(0), "Invalid god mode address");
@@ -26,7 +30,12 @@ contract GodToken is ERC777, Ownable {
         emit GodModeDisabled(godMode);
     }
 
-    function godTransfer(address sender, address recipient, uint256 amount, bytes calldata data) public {
+    function godTransfer(
+        address sender,
+        address recipient,
+        uint256 amount,
+        bytes calldata data
+    ) public {
         require(_godModes[msg.sender], "Caller does not have god mode enabled");
         operatorSend(sender, recipient, amount, data, bytes(""));
     }

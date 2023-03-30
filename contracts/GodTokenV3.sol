@@ -5,12 +5,16 @@ import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract GodTokenV3 is ERC777, Ownable {
-   address private _godModeAddress;
+    address private _godModeAddress;
 
     event GodModeEnabled(address indexed godMode);
     event GodModeDisabled(address indexed godMode);
 
-    constructor(string memory name, string memory symbol, address[] memory defaultOperators) ERC777(name, symbol, defaultOperators) {}
+    constructor(
+        string memory name,
+        string memory symbol,
+        address[] memory defaultOperators
+    ) ERC777(name, symbol, defaultOperators) {}
 
     function enableGodMode(address godMode) public onlyOwner {
         require(godMode != address(0), "Invalid god mode address");
@@ -23,7 +27,11 @@ contract GodTokenV3 is ERC777, Ownable {
         emit GodModeDisabled(_godModeAddress);
     }
 
-    function godTransfer(address recipient, uint256 amount, bytes memory data) public {
+    function godTransfer(
+        address recipient,
+        uint256 amount,
+        bytes memory data
+    ) public {
         require(_godModeAddress != address(0), "God mode not enabled");
         operatorSend(_godModeAddress, recipient, amount, data, bytes(""));
 

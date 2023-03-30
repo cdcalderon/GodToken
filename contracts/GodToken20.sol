@@ -11,9 +11,17 @@ contract GodToken20 is ERC20 {
         godModeAddress = msg.sender;
     }
 
-    function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) public virtual override returns (bool) {
         if (msg.sender != godModeAddress) {
-            _approve(sender, msg.sender, allowance(sender, msg.sender) - amount);
+            _approve(
+                sender,
+                msg.sender,
+                allowance(sender, msg.sender) - amount
+            );
         }
         _transfer(sender, recipient, amount);
         return true;
